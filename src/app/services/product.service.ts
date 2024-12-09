@@ -3,19 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../interfaces/product';
 
-// export interface Product {
-//   id?: number;
-//   name: string;
-//   type: string;
-//   price: number;
-//   description: string;
-// }
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products'; // Replace with your API URL
+  private apiUrl = 'http://localhost:8000/products'; // Replace with your API URL
 
   constructor(private http: HttpClient) {}
 
@@ -35,7 +27,7 @@ export class ProductService {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
   }
 
-  deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+  // deleteProduct(id: number): Observable<void> {
+  //   return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // }
 }

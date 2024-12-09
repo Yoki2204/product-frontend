@@ -8,21 +8,22 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Product } from '../interfaces/product';
 import { ProductService } from '../services/product.service';
 
-const PRODUCTS: Product[] = [
-  { id: 1, name: 'Product 1', type: 'Grocery', description: 'Category 1', price: 100 },
-  { id: 2, name: 'Product 2', type: 'Grocery', description: 'Category 2', price: 200 },
-  { id: 3, name: 'Product 3', type: 'Grocery', description: 'Category 3', price: 300 },
-  { id: 4, name: 'Product 4', type: 'Grocery', description: 'Category 1', price: 400 },
-  { id: 5, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
-  { id: 6, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
-  { id: 7, name: 'Product 1', type: 'Grocery', description: 'Category 1', price: 100 },
-  { id: 8, name: 'Product 2', type: 'Grocery', description: 'Category 2', price: 200 },
-  { id: 9, name: 'Product 3', type: 'Grocery', description: 'Category 3', price: 300 },
-  { id: 10, name: 'Product 4', type: 'Grocery', description: 'Category 1', price: 400 },
-  { id: 11, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
-  { id: 12, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
-  // Add more products as needed
-];
+// const PRODUCTS: Product[] = [
+//   { id: 1, name: 'Product 1', type: 'Grocery', description: 'Category 1', price: 100 },
+//   { id: 2, name: 'Product 2', type: 'Grocery', description: 'Category 2', price: 200 },
+//   { id: 3, name: 'Product 3', type: 'Grocery', description: 'Category 3', price: 300 },
+//   { id: 4, name: 'Product 4', type: 'Grocery', description: 'Category 1', price: 400 },
+//   { id: 5, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
+//   { id: 6, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
+//   { id: 7, name: 'Product 1', type: 'Grocery', description: 'Category 1', price: 100 },
+//   { id: 8, name: 'Product 2', type: 'Grocery', description: 'Category 2', price: 200 },
+//   { id: 9, name: 'Product 3', type: 'Grocery', description: 'Category 3', price: 300 },
+//   { id: 10, name: 'Product 4', type: 'Grocery', description: 'Category 1', price: 400 },
+//   { id: 11, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
+//   { id: 12, name: 'Product 5', type: 'Grocery', description: 'Category 2', price: 500 },
+//   { id: 13, name: 'AAB', type: 'Grocery', description: 'Category 2', price: 500 },
+//   // Add more products as needed
+// ];
 
 
 @Component({
@@ -34,12 +35,13 @@ const PRODUCTS: Product[] = [
 })
 export class ProductListComponent {
   displayedColumns: string[] = ['name', 'type', 'description', 'price', 'action'];
-  dataSource = new MatTableDataSource(PRODUCTS);
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   searchText: string = '';
+  emptyDataLoaded = true;
 
   constructor(private router: Router,private productService: ProductService) {
 
@@ -57,6 +59,13 @@ this.getAllProducts();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
+    this.dataSource.filterPredicate = (item: any, str: string): boolean => {
+      debugger;
+      return (
+        item.name.toLowerCase().indexOf(str.toLowerCase()) !== -1
+      );
+    };
+
   }
 
   addProduct() {
@@ -67,12 +76,16 @@ this.getAllProducts();
     this.router.navigate(['/edit-product', id]);
   }
   getAllProducts(): void {
+    debugger;
     this.productService.getProducts().subscribe((data) => {
+      debugger;
       this.dataSource.data = data;
+      this.emptyDataLoaded = data.length > 0 ? false : true;
     });
   }
 
   applyFilter(): void {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
+    this.emptyDataLoaded =this.dataSource.data.length > 0 ? false : true;
   }
 }

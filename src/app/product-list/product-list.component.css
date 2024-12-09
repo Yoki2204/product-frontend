@@ -48,3 +48,8 @@ table {
   margin-right: auto;
   max-height: 50% !important;
 }
+
+.no-record{
+  color: #ffff;
+  text-align: center;
+}

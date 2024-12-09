@@ -24,7 +24,7 @@ export class ManageProductComponent {
   oldProductForm: any;
   isEditMode = false;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute,private router: Router) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     //this.productForm.id =
@@ -55,10 +55,16 @@ export class ManageProductComponent {
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     if (this.isEditMode) {
-      this.productService.updateProduct(this.productForm.id!, this.productForm)
-        .subscribe(() => {
-          this.resetForm();
-        });
+      if (this.isValid()) {
+        this.productService.updateProduct(this.productForm.id!, this.productForm)
+          .subscribe((response) => {
+            if (response)
+              this.showSuccessMessage = true;
+          });
+      } else {
+        this.showSuccessMessage = false;
+        this.showErrorMessage = true;
+      }
     } else {
       if (this.isValid()) {
         this.productService.createProduct(this.productForm)
@@ -66,7 +72,6 @@ export class ManageProductComponent {
             if (response) {
               this.showErrorMessage = false;
               this.showSuccessMessage = true;
-              this.resetForm();
             }
 
           });
@@ -102,7 +107,7 @@ export class ManageProductComponent {
     }
   }
 
-  backToProduct(){
+  backToProduct() {
     this.router.navigate(['']);
   }
 }

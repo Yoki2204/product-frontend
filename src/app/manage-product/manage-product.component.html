@@ -4,42 +4,43 @@
   </div>
 
   <div class="form-container">
-    <div *ngIf="showSuccessMessage" style="color:greenyellow; margin-bottom:20px;"> Product {{ isEditMode ? 'updated' :
+    <div *ngIf="showSuccessMessage" class="success-message"> Product {{ isEditMode ? 'updated' :
       'created' }} successfully!!!</div>
-    <div *ngIf="showErrorMessage" style="color:red; margin-bottom:20px;"> Please fill the all fields</div>
+    <div *ngIf="showErrorMessage" class="error-message"> Please fill the all fields</div>
     <form (ngSubmit)="submitForm()">
       <div>
         <label class="label">Name: </label>
         <mat-form-field class="content">
 
-          <input type="text" matInput [(ngModel)]="productForm.name" name="name" required />
+          <input type="text" matInput [(ngModel)]="productForm.name" maxlength="100"
+          name="name" required />
         </mat-form-field>
 
       </div>
       <div>
         <label class="label">Type: </label>
         <mat-form-field class="content">
-          <input type="text" matInput [(ngModel)]="productForm.type" name="type" required />
+          <input type="text" matInput [(ngModel)]="productForm.type" name="type"  maxlength="100" required />
         </mat-form-field>
       </div>
       <div>
         <label class="label">Price: </label>
         <mat-form-field class="content">
-          <input type="number" matInput [(ngModel)]="productForm.price" name="price" required />
+          <input type="number" matInput [(ngModel)]="productForm.price" name="price"  maxlength="10" required />
         </mat-form-field>
       </div>
       <div>
         <label class="label">Description: </label>
         <mat-form-field class="content">
-          <textarea matInput [(ngModel)]="productForm.description" name="description" required></textarea>
+          <textarea matInput [(ngModel)]="productForm.description" name="description" maxlength="1000" required></textarea>
         </mat-form-field>
       </div>
       <button mat-button class="action-button margin-right-10" type="submit">{{ isEditMode ? 'Update' : 'Create'
         }}</button>
       <button mat-button class="action-button margin-right-10 " type="button" (click)="resetForm()">Cancel</button>
-     <div class="product-list-button">
-      <button mat-button class="action-button" type="button" (click)="backToProduct()">Back To Product List</button>
-     </div>
+      <div class="product-list-button">
+        <button mat-button class="action-button" type="button" (click)="backToProduct()">Back To Product List</button>
+      </div>
     </form>
   </div>
 </div>

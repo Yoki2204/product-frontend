@@ -36,3 +36,11 @@
 .product-list-button{
   margin-top: 10px;
 }
+.success-message{
+  color:#adff2f;
+   margin-bottom:20px;
+}
+
+.error-message{
+  color:red; margin-bottom:20px;
+}
