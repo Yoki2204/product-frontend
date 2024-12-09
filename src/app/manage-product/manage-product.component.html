@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="header-container">
+    <h2>{{ isEditMode ? 'Edit' : 'Create' }} Product</h2>
+  </div>
+
+  <div class="form-container">
+    <div *ngIf="showSuccessMessage" style="color:greenyellow; margin-bottom:20px;"> Product {{ isEditMode ? 'updated' :
+      'created' }} successfully!!!</div>
+    <div *ngIf="showErrorMessage" style="color:red; margin-bottom:20px;"> Please fill the all fields</div>
+    <form (ngSubmit)="submitForm()">
+      <div>
+        <label class="label">Name: </label>
+        <mat-form-field class="content">
+
+          <input type="text" matInput [(ngModel)]="productForm.name" name="name" required />
+        </mat-form-field>
+
+      </div>
+      <div>
+        <label class="label">Type: </label>
+        <mat-form-field class="content">
+          <input type="text" matInput [(ngModel)]="productForm.type" name="type" required />
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="label">Price: </label>
+        <mat-form-field class="content">
+          <input type="number" matInput [(ngModel)]="productForm.price" name="price" required />
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="label">Description: </label>
+        <mat-form-field class="content">
+          <textarea matInput [(ngModel)]="productForm.description" name="description" required></textarea>
+        </mat-form-field>
+      </div>
+      <button mat-button class="action-button margin-right-10" type="submit">{{ isEditMode ? 'Update' : 'Create'
+        }}</button>
+      <button mat-button class="action-button margin-right-10 " type="button" (click)="resetForm()">Cancel</button>
+     <div class="product-list-button">
+      <button mat-button class="action-button" type="button" (click)="backToProduct()">Back To Product List</button>
+     </div>
+    </form>
+  </div>
+</div>
